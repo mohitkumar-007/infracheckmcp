@@ -57,11 +57,11 @@ def _capture_output(fn, *args, **kwargs):
     return result, buf.getvalue()
 
 
-def _capture_output_async(coro):
-    """Run an async coroutine and capture its stdout alongside the return value."""
+async def _capture_output_async(coro):
+    """Await an async coroutine and capture its stdout alongside the return value."""
     buf = io.StringIO()
     with redirect_stdout(buf):
-        result = asyncio.run(coro)
+        result = await coro
     return result, buf.getvalue()
 
 
@@ -92,14 +92,14 @@ def tc1_server_health(environment: str) -> str:
 
 
 @mcp.tool()
-def tc2_websocket_health(environment: str) -> str:
+async def tc2_websocket_health(environment: str) -> str:
     """Check WebSocket connectivity to TCP game servers via the WS gateway.
 
     Args:
         environment: QA environment name (QA2, QA8, or QA10)
     """
     env_name, env_config = _resolve_env(environment)
-    result, output = _capture_output_async(run_tc2(env_name, env_config))
+    result, output = await _capture_output_async(run_tc2(env_name, env_config))
     return _format_result(result, output)
 
 
@@ -116,26 +116,26 @@ def tc3_server_inventory(environment: str) -> str:
 
 
 @mcp.tool()
-def tc4_game_protocol(environment: str) -> str:
+async def tc4_game_protocol(environment: str) -> str:
     """Test game protocol handshake (SM_INIT) on TCP game servers via WS gateway.
 
     Args:
         environment: QA environment name (QA2, QA8, or QA10)
     """
     env_name, env_config = _resolve_env(environment)
-    result, output = _capture_output_async(run_tc4(env_name, env_config))
+    result, output = await _capture_output_async(run_tc4(env_name, env_config))
     return _format_result(result, output)
 
 
 @mcp.tool()
-def tc5_ws_login(environment: str) -> str:
+async def tc5_ws_login(environment: str) -> str:
     """Test WebSocket login authentication (sends credentials, waits for sm-login-success).
 
     Args:
         environment: QA environment name (QA2, QA8, or QA10)
     """
     env_name, env_config = _resolve_env(environment)
-    result, output = _capture_output_async(run_tc5(env_name, env_config))
+    result, output = await _capture_output_async(run_tc5(env_name, env_config))
     return _format_result(result, output)
 
 
@@ -178,7 +178,7 @@ def tc8_dms_service(environment: str) -> str:
 # ── Run All Tool ─────────────────────────────────────────────────────
 
 @mcp.tool()
-def run_all_checks(environment: str = "all") -> str:
+async def run_all_checks(environment: str = "all") -> str:
     """Run ALL health checks (TC1-TC8) for one or all QA environments.
 
     Args:
@@ -189,15 +189,23 @@ def run_all_checks(environment: str = "all") -> str:
         key, _ = _resolve_env(environment)
         envs = {key: envs[key]}
 
-    tc_runners = [
-        ("TC1: Server Health",       lambda n, c: _capture_output(run_tc1, n, c)),
-        ("TC2: WebSocket Health",    lambda n, c: _capture_output_async(run_tc2(n, c))),
-        ("TC3: Server Inventory",    lambda n, c: _capture_output(run_tc3, n, c)),
-        ("TC4: Game Protocol",       lambda n, c: _capture_output_async(run_tc4(n, c))),
-        ("TC5: WS Login",           lambda n, c: _capture_output_async(run_tc5(n, c))),
-        ("TC6: Subscription API",    lambda n, c: _capture_output(run_tc6, n, c)),
-        ("TC7: KYC Service",         lambda n, c: _capture_output(run_tc7, n, c)),
-        ("TC8: DMS Service",         lambda n, c: _capture_output(run_tc8, n, c)),
+    # Sync runners return (result, output) directly; async ones return coroutines
+    sync_runners = {
+        "TC1: Server Health":       lambda n, c: _capture_output(run_tc1, n, c),
+        "TC3: Server Inventory":    lambda n, c: _capture_output(run_tc3, n, c),
+        "TC6: Subscription API":    lambda n, c: _capture_output(run_tc6, n, c),
+        "TC7: KYC Service":         lambda n, c: _capture_output(run_tc7, n, c),
+        "TC8: DMS Service":         lambda n, c: _capture_output(run_tc8, n, c),
+    }
+    async_runners = {
+        "TC2: WebSocket Health":    lambda n, c: _capture_output_async(run_tc2(n, c)),
+        "TC4: Game Protocol":       lambda n, c: _capture_output_async(run_tc4(n, c)),
+        "TC5: WS Login":            lambda n, c: _capture_output_async(run_tc5(n, c)),
+    }
+    tc_order = [
+        "TC1: Server Health", "TC2: WebSocket Health", "TC3: Server Inventory",
+        "TC4: Game Protocol", "TC5: WS Login", "TC6: Subscription API",
+        "TC7: KYC Service", "TC8: DMS Service",
     ]
 
     lines = []
@@ -209,9 +217,12 @@ def run_all_checks(environment: str = "all") -> str:
         lines.append(f"{'=' * 60}")
 
         env_statuses = []
-        for tc_label, runner in tc_runners:
+        for tc_label in tc_order:
             try:
-                result, output = runner(env_name, env_config)
+                if tc_label in async_runners:
+                    result, output = await async_runners[tc_label](env_name, env_config)
+                else:
+                    result, output = sync_runners[tc_label](env_name, env_config)
                 status = result.get("overall_status", result.get("status", "UNKNOWN"))
                 summary = result.get("summary", result.get("passed", ""))
                 icon = "PASS" if status == "PASS" else ("SKIP" if status == "SKIPPED" else "FAIL")
