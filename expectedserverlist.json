@@ -1,0 +1,13 @@
+[
+  "admin",
+  "main",
+  "master",
+  "tournament",
+  "tournament-caching-proxy",
+  "game2-practice",
+  "report",
+  "mm-guard",
+  "tour-game",
+  "db-updater",
+  "withdrawal"
+]

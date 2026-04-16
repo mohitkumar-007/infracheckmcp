@@ -1,0 +1,13 @@
+{
+  "admin": {"ip": "10.38.6.138", "port": 8080, "path": "/", "type": "http"},
+  "main": {"ip": "10.38.6.138", "port": 8080, "path": "/", "type": "http"},
+  "tournament": {"ip": "10.38.6.70", "port": 8080, "path": "/", "type": "http"},
+  "game2-practice": {"ip": "10.38.6.125", "port": 8080, "path": "/", "type": "tcp"},
+  "report": {"ip": "10.38.6.206", "port": 8080, "path": "/", "type": "backend"},
+  "mm-guard": {"ip": "10.38.6.135", "port": 8080, "path": "/", "type": "tcp"},
+  "master": {"ip": "10.38.6.138", "port": 8080, "path": "/", "type": "http"},
+  "db-updater": {"ip": "10.38.6.138", "port": 8080, "path": "/", "type": "http"},
+  "tour-game": {"ip": "10.38.6.135", "port": 8080, "path": "/", "type": "tcp"},
+  "tournament-caching-proxy": {"ip": "10.38.6.70", "port": 8080, "path": "/", "type": "http"},
+  "withdrawal": {"ip": "10.38.6.138", "port": 8080, "path": "/", "type": "http"}
+}

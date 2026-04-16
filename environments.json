@@ -1,0 +1,87 @@
+{
+  "QA8": {
+    "ws_gateway": "wss://gsj8.jungleerummyqa.com",
+    "auth_url": "wss://www8.jungleerummyqa.com/ws",
+    "subscription_admin_url": "http://subscription-admin-backend-service-jwr-qa-8.jwrnonprod.int",
+    "kyc_url": "http://kyc-jwr-qa-8.jungleerummyqa.com",
+    "dms_url": "https://dms-jwr-qa-8.jungleerummyqa.com",
+    "login": {
+      "phone": "8383838317",
+      "password": "Test@123"
+    },
+    "servers": {
+      "admin":                    {"ip": "10.38.6.138", "port": 8603, "path": "/system/console/bundles", "type": "http"},
+      "main":                     {"ip": "10.38.6.138", "port": 8600, "path": "/system/console/bundles", "type": "http"},
+      "tournament":               {"ip": "10.38.6.70",  "port": 8604, "path": "/system/console/bundles", "type": "http"},
+      "game2-practice":           {"ip": "10.38.6.125", "port": 8602, "path": "/system/console/bundles", "type": "tcp"},
+      "report":                   {"ip": "10.38.6.206", "port": 8674, "path": "/system/console/bundles", "type": "backend"},
+      "mm-guard":                 {"ip": "10.38.6.135", "port": 8622, "path": "/", "type": "tcp"},
+      "master":                   {"ip": "10.38.6.138", "port": 8601, "path": "/system/console/bundles", "type": "http"},
+      "db-updater":               {"ip": "10.38.6.138", "port": 8606, "path": "/system/console/bundles", "type": "http"},
+      "tour-game":                {"ip": "10.38.6.135", "port": 8614, "path": "/", "type": "tcp"},
+      "tournament-caching-proxy": {"ip": "10.38.6.70",  "port": 8679, "path": "/system/console/bundles", "type": "http"},
+      "withdrawal":               {"ip": "10.38.6.138", "port": 8611, "path": "/system/console/bundles", "type": "http"}
+    },
+    "expected_servers": [
+      "admin", "main", "master", "tournament", "tournament-caching-proxy",
+      "game2-practice", "report", "mm-guard", "tour-game", "db-updater", "withdrawal"
+    ]
+  },
+  "QA2": {
+    "ws_gateway": "wss://gsj2.jungleerummyqa.com",
+    "auth_url": "wss://www2.jungleerummyqa.com/ws",
+    "subscription_admin_url": "http://subscription-admin-backend-service-jwr-qa-2.jwrnonprod.int",
+    "kyc_url": "http://kyc-jwr-qa-2.jungleerummyqa.com",
+    "dms_url": "https://dms-jwr-qa-2.jungleerummyqa.com",
+    "login": {
+      "phone": "8383838317",
+      "password": "Test@123"
+    },
+    "servers": {
+      "admin":                    {"ip": "10.38.6.175", "port": 8603, "path": "/", "type": "http"},
+      "main":                     {"ip": "10.38.6.175", "port": 8600, "path": "/", "type": "http"},
+      "tournament":               {"ip": "10.38.6.123",  "port": 8604, "path": "/", "type": "http"},
+      "game2-practice":           {"ip": "10.38.6.140", "port": 8602, "path": "/", "type": "tcp"},
+      "report":                   {"ip": "10.38.6.123", "port": 8674, "path": "/", "type": "backend"},
+      "mm-guard":                 {"ip": "10.38.6.71", "port": 8622, "path": "/", "type": "tcp"},
+      "master":                   {"ip": "10.38.6.175", "port": 8601, "path": "/", "type": "http"},
+      "db-updater":               {"ip": "10.38.6.175", "port": 8606, "path": "/", "type": "http"},
+      "tour-game":                {"ip": "10.38.6.71", "port": 8614, "path": "/", "type": "tcp"},
+      "tournament-caching-proxy": {"ip": "10.38.6.175",  "port": 8679, "path": "/", "type": "http"},
+      "withdrawal":               {"ip": "10.38.6.175", "port": 8611, "path": "/", "type": "http"}
+
+    },
+    "expected_servers": [
+      "admin", "main", "master", "tournament", "tournament-caching-proxy",
+      "game2-practice", "report", "mm-guard", "tour-game", "db-updater", "withdrawal"
+    ]
+  },
+  "QA10": {
+    "ws_gateway": "wss://gsj10.jungleerummyqa.com",
+    "auth_url": "wss://www10.jungleerummyqa.com/ws",
+    "subscription_admin_url": "http://subscription-admin-backend-service-jwr-qa-10.jwrnonprod.int",
+    "kyc_url": "http://kyc-jwr-qa-10.jungleerummyqa.com",
+    "dms_url": "https://dms-jwr-qa-10.jungleerummyqa.com",
+    "login": {
+      "phone": "8383838317",
+      "password": "Test@123"
+    },
+    "servers": {
+      "admin":                    {"ip": "10.38.6.239", "port": 8603, "path": "/", "type": "http"},
+      "main":                     {"ip": "10.38.6.239", "port": 8600, "path": "/", "type": "http"},
+      "tournament":               {"ip": "10.38.6.239",  "port": 8604, "path": "/", "type": "http"},
+      "game2-practice":           {"ip": "10.38.6.179", "port": 8602, "path": "/", "type": "tcp"},
+      "report":                   {"ip": "10.38.6.179", "port": 8674, "path": "/", "type": "backend"},
+      "mm-guard":                 {"ip": "10.38.6.215", "port": 8622, "path": "/", "type": "tcp"},
+      "master":                   {"ip": "10.38.6.239", "port": 8601, "path": "/", "type": "http"},
+      "db-updater":               {"ip": "10.38.6.239", "port": 8606, "path": "/", "type": "http"},
+      "tour-game":                {"ip": "10.38.6.215", "port": 8614, "path": "/", "type": "tcp"},
+      "tournament-caching-proxy": {"ip": "10.38.6.239",  "port": 8679, "path": "/", "type": "http"},
+      "withdrawal":               {"ip": "10.38.6.239", "port": 8611, "path": "/", "type": "http"}
+    },
+    "expected_servers": [
+      "admin", "main", "master", "tournament", "tournament-caching-proxy",
+      "game2-practice", "report", "mm-guard", "tour-game", "db-updater", "withdrawal"
+    ]
+  }
+}

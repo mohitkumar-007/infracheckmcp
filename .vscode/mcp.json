@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "infra-health-check": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": ["${workspaceFolder}/mcp_server.py"]
+    }
+  }
+}
