@@ -1,5 +1,5 @@
 #!/bin/bash
-# One-time setup for InfraHealthCheck MCP server
+# One-time setup for InfraHealthCheck MCP server (for local development)
 set -e
 
 cd "$(dirname "$0")"
@@ -7,40 +7,42 @@ cd "$(dirname "$0")"
 echo "🔧 Creating virtual environment..."
 python3 -m venv .venv
 
-echo "📦 Installing dependencies..."
-.venv/bin/pip install -r requirements.txt --quiet
-
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+echo "📦 Installing package in editable mode..."
+.venv/bin/pip install -e . --quiet
 
 echo ""
 echo "✅ Setup complete!"
 echo ""
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "  Anyone can install this MCP with a single config — NO cloning needed!"
+echo ""
+echo "  Claude Desktop  →  add to claude_desktop_config.json:"
+echo ""
+echo '    {'
+echo '      "mcpServers": {'
+echo '        "infra-health-check": {'
+echo '          "command": "uvx",'
+echo '          "args": ["--from", "git+https://github.com/mohitkumar-007/infracheckmcp.git", "infracheckmcp"]'
+echo '        }'
+echo '      }'
+echo '    }'
+echo ""
+echo "  Gemini CLI  →  add to ~/.gemini/settings.json:"
+echo ""
+echo '    {'
+echo '      "mcpServers": {'
+echo '        "infra-health-check": {'
+echo '          "command": "uvx",'
+echo '          "args": ["--from", "git+https://github.com/mohitkumar-007/infracheckmcp.git", "infracheckmcp"]'
+echo '        }'
+echo '      }'
+echo '    }'
+echo ""
+echo "  Claude Code CLI:"
+echo '    claude mcp add infra-health-check -- uvx --from git+https://github.com/mohitkumar-007/infracheckmcp.git infracheckmcp'
+echo ""
 echo "  VS Code (Copilot):"
-echo "    The MCP server will be auto-detected via .vscode/mcp.json"
-echo "    Just open this folder in VS Code."
+echo "    Just open this folder in VS Code — auto-detected via .vscode/mcp.json"
 echo ""
-echo "  Claude Desktop:"
-echo "    Add this to your Claude Desktop config file:"
-echo ""
-echo "    macOS:  ~/Library/Application Support/Claude/claude_desktop_config.json"
-echo "    Windows: %APPDATA%\\Claude\\claude_desktop_config.json"
-echo "    Linux:  ~/.config/Claude/claude_desktop_config.json"
-echo ""
-echo "    {"
-echo "      \"mcpServers\": {"
-echo "        \"infra-health-check\": {"
-echo "          \"command\": \"${PROJECT_DIR}/.venv/bin/python\","
-echo "          \"args\": [\"${PROJECT_DIR}/mcp_server.py\"]"
-echo "        }"
-echo "      }"
-echo "    }"
-echo ""
-echo "    Then restart Claude Desktop."
-echo ""
-echo "  Claude Code (CLI):"
-echo "    claude mcp add infra-health-check .venv/bin/python mcp_server.py"
-echo ""
-echo "  Manual run:  .venv/bin/python run_all.py"
-echo "  MCP server:  .venv/bin/python mcp_server.py"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

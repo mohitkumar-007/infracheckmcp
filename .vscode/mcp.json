@@ -2,8 +2,8 @@
   "servers": {
     "infra-health-check": {
       "type": "stdio",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": ["${workspaceFolder}/mcp_server.py"]
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/mohitkumar-007/infracheckmcp.git", "infracheckmcp"]
     }
   }
 }

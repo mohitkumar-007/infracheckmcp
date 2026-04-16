@@ -3,14 +3,14 @@ import json
 import os
 import time
 
-from tc1_servers import run_tc1
-from tc2_websocket import run_tc2
-from tc3_availableserverlist import run_tc3
-from tc4_e2e_game_flow import run_tc4
-from tc5_wslogincheck import run_tc5
-from tc6_subscription_api import run_tc6
-from tc7_kyc_health import run_tc7
-from tc8_dms_health import run_tc8
+from infracheckmcp.tc1_servers import run_tc1
+from infracheckmcp.tc2_websocket import run_tc2
+from infracheckmcp.tc3_availableserverlist import run_tc3
+from infracheckmcp.tc4_e2e_game_flow import run_tc4
+from infracheckmcp.tc5_wslogincheck import run_tc5
+from infracheckmcp.tc6_subscription_api import run_tc6
+from infracheckmcp.tc7_kyc_health import run_tc7
+from infracheckmcp.tc8_dms_health import run_tc8
 
 
 def load_json(filename):
