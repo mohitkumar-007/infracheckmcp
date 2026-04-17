@@ -25,6 +25,11 @@
     "expected_servers": [
       "admin", "main", "master", "tournament", "tournament-caching-proxy",
       "game2-practice", "report", "mm-guard", "tour-game", "db-updater", "withdrawal"
+    ],
+    "kafka_brokers": [
+      {"ip": "10.38.6.29",  "port": 9092},
+      {"ip": "10.38.7.153", "port": 9092},
+      {"ip": "10.38.8.61",  "port": 9092}
     ]
   },
   "QA2": {
@@ -54,6 +59,11 @@
     "expected_servers": [
       "admin", "main", "master", "tournament", "tournament-caching-proxy",
       "game2-practice", "report", "mm-guard", "tour-game", "db-updater", "withdrawal"
+    ],
+    "kafka_brokers": [
+      {"ip": "10.38.6.29",  "port": 9092},
+      {"ip": "10.38.7.153", "port": 9092},
+      {"ip": "10.38.8.61",  "port": 9092}
     ]
   },
   "QA10": {
@@ -82,6 +92,11 @@
     "expected_servers": [
       "admin", "main", "master", "tournament", "tournament-caching-proxy",
       "game2-practice", "report", "mm-guard", "tour-game", "db-updater", "withdrawal"
+    ],
+    "kafka_brokers": [
+      {"ip": "10.38.6.29",  "port": 9092},
+      {"ip": "10.38.7.153", "port": 9092},
+      {"ip": "10.38.8.61",  "port": 9092}
     ]
   }
 }

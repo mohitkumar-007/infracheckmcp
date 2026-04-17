@@ -11,6 +11,7 @@ from infracheckmcp.tc5_wslogincheck import run_tc5
 from infracheckmcp.tc6_subscription_api import run_tc6
 from infracheckmcp.tc7_kyc_health import run_tc7
 from infracheckmcp.tc8_dms_health import run_tc8
+from infracheckmcp.tc9_kafka_health import run_tc9
 
 
 def load_json(filename):
@@ -100,6 +101,13 @@ def run_all():
         icon = "✅" if tc8["status"] == "PASS" else ("⏭️" if tc8["status"] == "SKIPPED" else "❌")
         print(f"    {icon} TC8: {tc8['status']}  —  {tc8.get('passed', '')}")
 
+        # TC9: Kafka Broker Health
+        print_tc_header("TC9: Kafka Broker Health Check")
+        tc9 = run_tc9(env_name, env_config)
+        env_results.append(tc9)
+        icon = "✅" if tc9["status"] == "PASS" else ("⏭️" if tc9["status"] == "SKIPPED" else "❌")
+        print(f"    {icon} TC9: {tc9['status']}  —  {tc9.get('summary', '')}")
+
         all_results[env_name] = env_results
 
     # ── Grand Summary ──
@@ -109,7 +117,7 @@ def run_all():
     print(f"  Total Time: {elapsed}s")
     print(f"{'#' * 70}")
 
-    tc_labels = ["TC1", "TC2", "TC3", "TC4", "TC5", "TC6", "TC7", "TC8"]
+    tc_labels = ["TC1", "TC2", "TC3", "TC4", "TC5", "TC6", "TC7", "TC8", "TC9"]
     header = f"  {'ENV':<8}" + "".join(f" | {t:<8}" for t in tc_labels) + " | OVERALL"
     print(f"\n{header}")
     print("  " + "-" * (10 + 11 * len(tc_labels) + 10))

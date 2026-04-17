@@ -1,7 +1,7 @@
 """
 InfraHealthCheck MCP Server
 ============================
-Exposes infrastructure health check test cases (TC1–TC8) as MCP tools
+Exposes infrastructure health check test cases (TC1–TC9) as MCP tools
 so they can be called from any AI interface (VS Code Copilot, Claude, etc.).
 
 Run:  infracheckmcp
@@ -25,6 +25,7 @@ from infracheckmcp.tc5_wslogincheck import run_tc5
 from infracheckmcp.tc6_subscription_api import run_tc6
 from infracheckmcp.tc7_kyc_health import run_tc7
 from infracheckmcp.tc8_dms_health import run_tc8
+from infracheckmcp.tc9_kafka_health import run_tc9
 
 mcp = FastMCP(
     "InfraHealthCheck",
@@ -175,11 +176,23 @@ def tc8_dms_service(environment: str) -> str:
     return _format_result(result, output)
 
 
+@mcp.tool()
+def tc9_kafka_health(environment: str) -> str:
+    """Health check Kafka brokers (TCP reachability + Kafka protocol handshake).
+
+    Args:
+        environment: QA environment name (QA2, QA8, or QA10)
+    """
+    env_name, env_config = _resolve_env(environment)
+    result, output = _capture_output(run_tc9, env_name, env_config)
+    return _format_result(result, output)
+
+
 # ── Run All Tool ─────────────────────────────────────────────────────
 
 @mcp.tool()
 async def run_all_checks(environment: str = "all") -> str:
-    """Run ALL health checks (TC1-TC8) for one or all QA environments.
+    """Run ALL health checks (TC1-TC9) for one or all QA environments.
 
     Args:
         environment: QA environment name (QA2, QA8, QA10) or "all" for every environment
@@ -196,6 +209,7 @@ async def run_all_checks(environment: str = "all") -> str:
         "TC6: Subscription API":    lambda n, c: _capture_output(run_tc6, n, c),
         "TC7: KYC Service":         lambda n, c: _capture_output(run_tc7, n, c),
         "TC8: DMS Service":         lambda n, c: _capture_output(run_tc8, n, c),
+        "TC9: Kafka Brokers":       lambda n, c: _capture_output(run_tc9, n, c),
     }
     async_runners = {
         "TC2: WebSocket Health":    lambda n, c: _capture_output_async(run_tc2(n, c)),
@@ -205,7 +219,7 @@ async def run_all_checks(environment: str = "all") -> str:
     tc_order = [
         "TC1: Server Health", "TC2: WebSocket Health", "TC3: Server Inventory",
         "TC4: Game Protocol", "TC5: WS Login", "TC6: Subscription API",
-        "TC7: KYC Service", "TC8: DMS Service",
+        "TC7: KYC Service", "TC8: DMS Service", "TC9: Kafka Brokers",
     ]
 
     lines = []
@@ -239,7 +253,7 @@ async def run_all_checks(environment: str = "all") -> str:
     lines.append(f"\n{'=' * 60}")
     lines.append("  GRAND SUMMARY")
     lines.append(f"{'=' * 60}")
-    tc_short = ["TC1", "TC2", "TC3", "TC4", "TC5", "TC6", "TC7", "TC8"]
+    tc_short = ["TC1", "TC2", "TC3", "TC4", "TC5", "TC6", "TC7", "TC8", "TC9"]
     header = f"  {'ENV':<6}" + "".join(f" {t:<6}" for t in tc_short) + "  OVERALL"
     lines.append(header)
     lines.append("  " + "-" * (6 + 7 * len(tc_short) + 10))
