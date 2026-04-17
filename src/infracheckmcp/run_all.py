@@ -12,6 +12,8 @@ from infracheckmcp.tc6_subscription_api import run_tc6
 from infracheckmcp.tc7_kyc_health import run_tc7
 from infracheckmcp.tc8_dms_health import run_tc8
 from infracheckmcp.tc9_kafka_health import run_tc9
+from infracheckmcp.tc10_mongo_health import run_tc10
+from infracheckmcp.tc11_mssql_health import run_tc11
 
 
 def load_json(filename):
@@ -108,6 +110,20 @@ def run_all():
         icon = "✅" if tc9["status"] == "PASS" else ("⏭️" if tc9["status"] == "SKIPPED" else "❌")
         print(f"    {icon} TC9: {tc9['status']}  —  {tc9.get('summary', '')}")
 
+        # TC10: MongoDB Health
+        print_tc_header("TC10: MongoDB Health Check")
+        tc10 = run_tc10(env_name, env_config)
+        env_results.append(tc10)
+        icon = "✅" if tc10["status"] == "PASS" else ("⏭️" if tc10["status"] == "SKIPPED" else "❌")
+        print(f"    {icon} TC10: {tc10['status']}  —  {tc10.get('summary', '')}")
+
+        # TC11: MSSQL Health
+        print_tc_header("TC11: MSSQL Health Check")
+        tc11 = run_tc11(env_name, env_config)
+        env_results.append(tc11)
+        icon = "✅" if tc11["status"] == "PASS" else ("⏭️" if tc11["status"] == "SKIPPED" else "❌")
+        print(f"    {icon} TC11: {tc11['status']}  —  {tc11.get('summary', '')}")
+
         all_results[env_name] = env_results
 
     # ── Grand Summary ──
@@ -117,7 +133,7 @@ def run_all():
     print(f"  Total Time: {elapsed}s")
     print(f"{'#' * 70}")
 
-    tc_labels = ["TC1", "TC2", "TC3", "TC4", "TC5", "TC6", "TC7", "TC8", "TC9"]
+    tc_labels = ["TC1", "TC2", "TC3", "TC4", "TC5", "TC6", "TC7", "TC8", "TC9", "TC10", "TC11"]
     header = f"  {'ENV':<8}" + "".join(f" | {t:<8}" for t in tc_labels) + " | OVERALL"
     print(f"\n{header}")
     print("  " + "-" * (10 + 11 * len(tc_labels) + 10))

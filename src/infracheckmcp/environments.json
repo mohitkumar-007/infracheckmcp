@@ -30,7 +30,19 @@
       {"ip": "10.38.6.29",  "port": 9092},
       {"ip": "10.38.7.153", "port": 9092},
       {"ip": "10.38.8.61",  "port": 9092}
-    ]
+    ],
+    "mongo_instances": [
+      {"name": "self-hosted-1", "ip": "10.38.3.182", "port": 27017, "username": "jwrmongouser", "password": "rHnBv7HarLYZdEvY", "auth_mechanism": "SCRAM-SHA-1"},
+      {"name": "self-hosted-2", "ip": "10.38.3.136", "port": 27017, "username": "jwrmongouser", "password": "rHnBv7HarLYZdEvY", "auth_mechanism": "SCRAM-SHA-1"}
+    ],
+    "mssql": {
+      "ip": "10.38.6.124",
+      "port": 1433,
+      "username": "jwrdbadmin",
+      "password": "Sc26uvhMMayX44VRAdGy",
+      "database": "JG_Rummy_QA8",
+      "trust_server_certificate": true
+    }
   },
   "QA2": {
     "ws_gateway": "wss://gsj2.jungleerummyqa.com",
@@ -64,7 +76,19 @@
       {"ip": "10.38.6.29",  "port": 9092},
       {"ip": "10.38.7.153", "port": 9092},
       {"ip": "10.38.8.61",  "port": 9092}
-    ]
+    ],
+    "mongo_instances": [
+      {"name": "self-hosted-1", "ip": "10.38.3.182", "port": 27017, "username": "jwrmongouser", "password": "rHnBv7HarLYZdEvY", "auth_mechanism": "SCRAM-SHA-1"},
+      {"name": "self-hosted-2", "ip": "10.38.3.136", "port": 27017, "username": "jwrmongouser", "password": "rHnBv7HarLYZdEvY", "auth_mechanism": "SCRAM-SHA-1"}
+    ],
+    "mssql": {
+      "ip": "10.38.6.124",
+      "port": 1433,
+      "username": "jwrdbadmin",
+      "password": "Sc26uvhMMayX44VRAdGy",
+      "database": "JG_Rummy_QA2",
+      "trust_server_certificate": true
+    }
   },
   "QA10": {
     "ws_gateway": "wss://gsj10.jungleerummyqa.com",
@@ -97,6 +121,18 @@
       {"ip": "10.38.6.29",  "port": 9092},
       {"ip": "10.38.7.153", "port": 9092},
       {"ip": "10.38.8.61",  "port": 9092}
-    ]
+    ],
+    "mongo_instances": [
+      {"name": "self-hosted-1", "ip": "10.38.3.182", "port": 27017, "username": "jwrmongouser", "password": "rHnBv7HarLYZdEvY", "auth_mechanism": "SCRAM-SHA-1"},
+      {"name": "self-hosted-2", "ip": "10.38.3.136", "port": 27017, "username": "jwrmongouser", "password": "rHnBv7HarLYZdEvY", "auth_mechanism": "SCRAM-SHA-1"}
+    ],
+    "mssql": {
+      "ip": "10.38.6.124",
+      "port": 1433,
+      "username": "jwrdbadmin",
+      "password": "Sc26uvhMMayX44VRAdGy",
+      "database": "JG_Rummy_10",
+      "trust_server_certificate": true
+    }
   }
 }
