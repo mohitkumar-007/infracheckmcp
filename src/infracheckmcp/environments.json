@@ -131,7 +131,7 @@
       "port": 1433,
       "username": "jwrdbadmin",
       "password": "Sc26uvhMMayX44VRAdGy",
-      "database": "JG_Rummy_10",
+      "database": "JG_Rummy_QA10",
       "trust_server_certificate": true
     }
   }
